@@ -1,0 +1,772 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MessirveWSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdUsuarioNormal" />
+          </Key>
+          <Property Name="IdUsuarioNormal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Identificacion" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+          <Property Name="IdLogin" Type="int" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="CuponDescuento">
+          <Key>
+            <PropertyRef Name="IdCupon" />
+          </Key>
+          <Property Name="IdCupon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Cantidad" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MinimoAplicable" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RUC" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="IdLogin" />
+          </Key>
+          <Property Name="IdLogin" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="IdOrden" />
+          </Key>
+          <Property Name="IdOrden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroOrden" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Impuesto" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Envio" Type="bit" Nullable="false" />
+          <Property Name="SubTotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="TotalOrden" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FechaIngreso" Type="datetime" Nullable="false" />
+          <Property Name="FechaEntrega" Type="datetime" />
+          <Property Name="IdCupon" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioNormal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrdenProducto">
+          <Key>
+            <PropertyRef Name="IdOrdenProducto" />
+          </Key>
+          <Property Name="IdOrdenProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOrden" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Iva" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Decripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Exento" Type="bit" Nullable="false" />
+          <Property Name="IdMarca" Type="int" />
+          <Property Name="IdSubCategoria" Type="int" />
+          <Property Name="IdCategoria" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductoEmpresa">
+          <Key>
+            <PropertyRef Name="IdProductoEmpresa" />
+          </Key>
+          <Property Name="IdProductoEmpresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Descuento" Type="int" Nullable="false" />
+          <Property Name="PrecioBase" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FechaIngreso" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCategoria">
+          <Key>
+            <PropertyRef Name="IdSubCategoria" />
+          </Key>
+          <Property Name="IdSubCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Orden__IdCupon__49C3F6B7">
+          <End Role="CuponDescuento" Type="Self.CuponDescuento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuponDescuento">
+              <PropertyRef Name="IdCupon" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="IdCupon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden__IdUsuario__4F7CD00D">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdUsuarioNormal" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="IdUsuarioNormal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__IdOrd__4BAC3F29">
+          <End Role="Orden" Type="Self.Orden" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrdenProducto" Type="Self.OrdenProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="IdOrden" />
+            </Principal>
+            <Dependent Role="OrdenProducto">
+              <PropertyRef Name="IdOrden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__IdPro__5441852A">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrdenProducto" Type="Self.OrdenProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="OrdenProducto">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdSubC__2C3393D0">
+          <End Role="SubCategoria" Type="Self.SubCategoria" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategoria">
+              <PropertyRef Name="IdSubCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdSubCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdSubC__534D60F1">
+          <End Role="SubCategoria" Type="Self.SubCategoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategoria">
+              <PropertyRef Name="IdSubCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdSubCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdSubC__6EF57B66">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdSubCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductoE__IdEmp__4F7CD00D">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductoEmpresa" Type="Self.ProductoEmpresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="ProductoEmpresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductoE__IdPro__37A5467C">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductoEmpresa" Type="Self.ProductoEmpresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="ProductoEmpresa">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioNo__IdLog__403A8C7D">
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="IdLogin" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdLogin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MessirveWSModelStoreContainer">
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CuponDescuento" EntityType="Self.CuponDescuento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orden" EntityType="Self.Orden" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenProducto" EntityType="Self.OrdenProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductoEmpresa" EntityType="Self.ProductoEmpresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCategoria" EntityType="Self.SubCategoria" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Orden__IdCupon__49C3F6B7" Association="Self.FK__Orden__IdCupon__49C3F6B7">
+            <End Role="CuponDescuento" EntitySet="CuponDescuento" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden__IdUsuario__4F7CD00D" Association="Self.FK__Orden__IdUsuario__4F7CD00D">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__IdOrd__4BAC3F29" Association="Self.FK__OrdenProd__IdOrd__4BAC3F29">
+            <End Role="Orden" EntitySet="Orden" />
+            <End Role="OrdenProducto" EntitySet="OrdenProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__IdPro__5441852A" Association="Self.FK__OrdenProd__IdPro__5441852A">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="OrdenProducto" EntitySet="OrdenProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdSubC__2C3393D0" Association="Self.FK__Producto__IdSubC__2C3393D0">
+            <End Role="SubCategoria" EntitySet="SubCategoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdSubC__534D60F1" Association="Self.FK__Producto__IdSubC__534D60F1">
+            <End Role="SubCategoria" EntitySet="SubCategoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdSubC__6EF57B66" Association="Self.FK__Producto__IdSubC__6EF57B66">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductoE__IdEmp__4F7CD00D" Association="Self.FK__ProductoE__IdEmp__4F7CD00D">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="ProductoEmpresa" EntitySet="ProductoEmpresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductoE__IdPro__37A5467C" Association="Self.FK__ProductoE__IdPro__37A5467C">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="ProductoEmpresa" EntitySet="ProductoEmpresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioNo__IdLog__403A8C7D" Association="Self.FK__UsuarioNo__IdLog__403A8C7D">
+            <End Role="Login" EntitySet="Login" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MessirveWSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Productoes" Relationship="MessirveWSModel.FK__Producto__IdSubC__6EF57B66" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="IdLogin" />
+          </Key>
+          <Property Name="IdLogin" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Clientes" Relationship="MessirveWSModel.FK__UsuarioNo__IdLog__403A8C7D" FromRole="Login" ToRole="Cliente" />
+        </EntityType>
+        <EntityContainer Name="MessirveWSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categorias" EntityType="Self.Categoria" />
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <EntitySet Name="Productoes" EntityType="MessirveWSModel.Producto" />
+          <EntitySet Name="SubCategorias" EntityType="MessirveWSModel.SubCategoria" />
+          <AssociationSet Name="FK__Producto__IdSubC__6EF57B66" Association="MessirveWSModel.FK__Producto__IdSubC__6EF57B66">
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Producto" EntitySet="Productoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdSubC__534D60F1" Association="MessirveWSModel.FK__Producto__IdSubC__534D60F1">
+            <End Role="SubCategoria" EntitySet="SubCategorias" />
+            <End Role="Producto" EntitySet="Productoes" />
+          </AssociationSet>
+          <EntitySet Name="Clientes" EntityType="MessirveWSModel.Cliente" />
+          <EntitySet Name="CuponDescuentoes" EntityType="MessirveWSModel.CuponDescuento" />
+          <EntitySet Name="Empresas" EntityType="MessirveWSModel.Empresa" />
+          <EntitySet Name="Ordens" EntityType="MessirveWSModel.Orden" />
+          <EntitySet Name="OrdenProductoes" EntityType="MessirveWSModel.OrdenProducto" />
+          <EntitySet Name="ProductoEmpresas" EntityType="MessirveWSModel.ProductoEmpresa" />
+          <AssociationSet Name="FK__Orden__IdUsuario__4F7CD00D" Association="MessirveWSModel.FK__Orden__IdUsuario__4F7CD00D">
+            <End Role="Cliente" EntitySet="Clientes" />
+            <End Role="Orden" EntitySet="Ordens" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioNo__IdLog__403A8C7D" Association="MessirveWSModel.FK__UsuarioNo__IdLog__403A8C7D">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="Cliente" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden__IdCupon__49C3F6B7" Association="MessirveWSModel.FK__Orden__IdCupon__49C3F6B7">
+            <End Role="CuponDescuento" EntitySet="CuponDescuentoes" />
+            <End Role="Orden" EntitySet="Ordens" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductoE__IdEmp__4F7CD00D" Association="MessirveWSModel.FK__ProductoE__IdEmp__4F7CD00D">
+            <End Role="Empresa" EntitySet="Empresas" />
+            <End Role="ProductoEmpresa" EntitySet="ProductoEmpresas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__IdOrd__4BAC3F29" Association="MessirveWSModel.FK__OrdenProd__IdOrd__4BAC3F29">
+            <End Role="Orden" EntitySet="Ordens" />
+            <End Role="OrdenProducto" EntitySet="OrdenProductoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdenProd__IdPro__5441852A" Association="MessirveWSModel.FK__OrdenProd__IdPro__5441852A">
+            <End Role="Producto" EntitySet="Productoes" />
+            <End Role="OrdenProducto" EntitySet="OrdenProductoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductoE__IdPro__37A5467C" Association="MessirveWSModel.FK__ProductoE__IdPro__37A5467C">
+            <End Role="Producto" EntitySet="Productoes" />
+            <End Role="ProductoEmpresa" EntitySet="ProductoEmpresas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Decripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="Exento" Type="Boolean" Nullable="false" />
+          <Property Name="IdMarca" Type="Int32" />
+          <Property Name="IdSubCategoria" Type="Int32" />
+          <Property Name="IdCategoria" Type="Int32" />
+          <NavigationProperty Name="Categoria" Relationship="MessirveWSModel.FK__Producto__IdSubC__6EF57B66" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="SubCategoria1" Relationship="MessirveWSModel.FK__Producto__IdSubC__534D60F1" FromRole="Producto" ToRole="SubCategoria" />
+          <NavigationProperty Name="OrdenProductoes" Relationship="MessirveWSModel.FK__OrdenProd__IdPro__5441852A" FromRole="Producto" ToRole="OrdenProducto" />
+          <NavigationProperty Name="ProductoEmpresas" Relationship="MessirveWSModel.FK__ProductoE__IdPro__37A5467C" FromRole="Producto" ToRole="ProductoEmpresa" />
+        </EntityType>
+        <EntityType Name="SubCategoria">
+          <Key>
+            <PropertyRef Name="IdSubCategoria" />
+          </Key>
+          <Property Name="IdSubCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Productoes1" Relationship="MessirveWSModel.FK__Producto__IdSubC__534D60F1" FromRole="SubCategoria" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK__Producto__IdSubC__6EF57B66">
+          <End Type="MessirveWSModel.Categoria" Role="Categoria" Multiplicity="0..1" />
+          <End Type="MessirveWSModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdSubCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdSubC__534D60F1">
+          <End Type="MessirveWSModel.SubCategoria" Role="SubCategoria" Multiplicity="0..1" />
+          <End Type="MessirveWSModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategoria">
+              <PropertyRef Name="IdSubCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdSubCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdUsuarioNormal" />
+          </Key>
+          <Property Name="IdUsuarioNormal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Identificacion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdLogin" Type="Int32" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ordens" Relationship="MessirveWSModel.FK__Orden__IdUsuario__4F7CD00D" FromRole="Cliente" ToRole="Orden" />
+          <NavigationProperty Name="Login" Relationship="MessirveWSModel.FK__UsuarioNo__IdLog__403A8C7D" FromRole="Cliente" ToRole="Login" />
+        </EntityType>
+        <EntityType Name="CuponDescuento">
+          <Key>
+            <PropertyRef Name="IdCupon" />
+          </Key>
+          <Property Name="IdCupon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="MinimoAplicable" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ordens" Relationship="MessirveWSModel.FK__Orden__IdCupon__49C3F6B7" FromRole="CuponDescuento" ToRole="Orden" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RUC" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="Correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProductoEmpresas" Relationship="MessirveWSModel.FK__ProductoE__IdEmp__4F7CD00D" FromRole="Empresa" ToRole="ProductoEmpresa" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="IdOrden" />
+          </Key>
+          <Property Name="IdOrden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroOrden" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Impuesto" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Envio" Type="Boolean" Nullable="false" />
+          <Property Name="SubTotal" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="TotalOrden" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
+          <Property Name="IdCupon" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioNormal" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="MessirveWSModel.FK__Orden__IdUsuario__4F7CD00D" FromRole="Orden" ToRole="Cliente" />
+          <NavigationProperty Name="CuponDescuento" Relationship="MessirveWSModel.FK__Orden__IdCupon__49C3F6B7" FromRole="Orden" ToRole="CuponDescuento" />
+          <NavigationProperty Name="OrdenProductoes" Relationship="MessirveWSModel.FK__OrdenProd__IdOrd__4BAC3F29" FromRole="Orden" ToRole="OrdenProducto" />
+        </EntityType>
+        <EntityType Name="OrdenProducto">
+          <Key>
+            <PropertyRef Name="IdOrdenProducto" />
+          </Key>
+          <Property Name="IdOrdenProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOrden" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Iva" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="MessirveWSModel.FK__OrdenProd__IdOrd__4BAC3F29" FromRole="OrdenProducto" ToRole="Orden" />
+          <NavigationProperty Name="Producto" Relationship="MessirveWSModel.FK__OrdenProd__IdPro__5441852A" FromRole="OrdenProducto" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="ProductoEmpresa">
+          <Key>
+            <PropertyRef Name="IdProductoEmpresa" />
+          </Key>
+          <Property Name="IdProductoEmpresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Descuento" Type="Int32" Nullable="false" />
+          <Property Name="PrecioBase" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Empresa" Relationship="MessirveWSModel.FK__ProductoE__IdEmp__4F7CD00D" FromRole="ProductoEmpresa" ToRole="Empresa" />
+          <NavigationProperty Name="Producto" Relationship="MessirveWSModel.FK__ProductoE__IdPro__37A5467C" FromRole="ProductoEmpresa" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK__Orden__IdUsuario__4F7CD00D">
+          <End Type="MessirveWSModel.Cliente" Role="Cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MessirveWSModel.Orden" Role="Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdUsuarioNormal" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="IdUsuarioNormal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioNo__IdLog__403A8C7D">
+          <End Type="MessirveWSModel.Login" Role="Login" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MessirveWSModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="IdLogin" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdLogin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden__IdCupon__49C3F6B7">
+          <End Type="MessirveWSModel.CuponDescuento" Role="CuponDescuento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MessirveWSModel.Orden" Role="Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuponDescuento">
+              <PropertyRef Name="IdCupon" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="IdCupon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductoE__IdEmp__4F7CD00D">
+          <End Type="MessirveWSModel.Empresa" Role="Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MessirveWSModel.ProductoEmpresa" Role="ProductoEmpresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="ProductoEmpresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__IdOrd__4BAC3F29">
+          <End Type="MessirveWSModel.Orden" Role="Orden" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MessirveWSModel.OrdenProducto" Role="OrdenProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="IdOrden" />
+            </Principal>
+            <Dependent Role="OrdenProducto">
+              <PropertyRef Name="IdOrden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdenProd__IdPro__5441852A">
+          <End Type="MessirveWSModel.Producto" Role="Producto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MessirveWSModel.OrdenProducto" Role="OrdenProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="OrdenProducto">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductoE__IdPro__37A5467C">
+          <End Type="MessirveWSModel.Producto" Role="Producto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MessirveWSModel.ProductoEmpresa" Role="ProductoEmpresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="ProductoEmpresa">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MessirveWSModelStoreContainer" CdmEntityContainer="MessirveWSEntities">
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="MessirveWSModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="MessirveWSModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="IdLogin" ColumnName="IdLogin" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productoes">
+            <EntityTypeMapping TypeName="MessirveWSModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="Exento" ColumnName="Exento" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Decripcion" ColumnName="Decripcion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCategorias">
+            <EntityTypeMapping TypeName="MessirveWSModel.SubCategoria">
+              <MappingFragment StoreEntitySet="SubCategoria">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="MessirveWSModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="IdLogin" ColumnName="IdLogin" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdUsuarioNormal" ColumnName="IdUsuarioNormal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CuponDescuentoes">
+            <EntityTypeMapping TypeName="MessirveWSModel.CuponDescuento">
+              <MappingFragment StoreEntitySet="CuponDescuento">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="MinimoAplicable" ColumnName="MinimoAplicable" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdCupon" ColumnName="IdCupon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresas">
+            <EntityTypeMapping TypeName="MessirveWSModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="RUC" ColumnName="RUC" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ordens">
+            <EntityTypeMapping TypeName="MessirveWSModel.Orden">
+              <MappingFragment StoreEntitySet="Orden">
+                <ScalarProperty Name="IdUsuarioNormal" ColumnName="IdUsuarioNormal" />
+                <ScalarProperty Name="IdCupon" ColumnName="IdCupon" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="TotalOrden" ColumnName="TotalOrden" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Envio" ColumnName="Envio" />
+                <ScalarProperty Name="Impuesto" ColumnName="Impuesto" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="NumeroOrden" ColumnName="NumeroOrden" />
+                <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenProductoes">
+            <EntityTypeMapping TypeName="MessirveWSModel.OrdenProducto">
+              <MappingFragment StoreEntitySet="OrdenProducto">
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="Iva" ColumnName="Iva" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
+                <ScalarProperty Name="IdOrdenProducto" ColumnName="IdOrdenProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductoEmpresas">
+            <EntityTypeMapping TypeName="MessirveWSModel.ProductoEmpresa">
+              <MappingFragment StoreEntitySet="ProductoEmpresa">
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="PrecioBase" ColumnName="PrecioBase" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdProductoEmpresa" ColumnName="IdProductoEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

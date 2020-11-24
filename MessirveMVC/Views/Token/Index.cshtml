@@ -1,0 +1,38 @@
+﻿@model MessirveMVC.Models.Usuario
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@using (Ajax.BeginForm("Login", "Token",
+                            new AjaxOptions { UpdateTargetId = "divInterestDeatils" }))
+{
+
+<fieldset>
+    <div style="text-align:center">
+        <legend>Ingresar</legend>
+        <div id="divInterestDeatils">@ViewBag.Message</div>
+
+        <div class="editor-label">
+            @Html.EditorFor(model => model.Username)
+        </div>
+
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.Password)
+        </div>
+        <p>
+            <input type="submit" value="Ingresar" />
+            <input type="button" class="btn btn-danger" value="Logout" onclick="location.href='@Url.Action("Logout", "Token")'">
+        </p>
+    </div>
+</fieldset>
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

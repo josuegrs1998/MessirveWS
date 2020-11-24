@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="866845157e9542b1b8ae90cee98304a2" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="MessirveWSModel.Categoria" Width="1.5" PointX="7.125" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MessirveWSModel.Login" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MessirveWSModel.Producto" Width="1.5" PointX="3.375" PointY="4" />
+        <EntityTypeShape EntityType="MessirveWSModel.SubCategoria" Width="1.5" PointX="7.875" PointY="4.375" />
+        <AssociationConnector Association="MessirveWSModel.FK__Producto__IdSubC__6EF57B66" />
+        <AssociationConnector Association="MessirveWSModel.FK__Producto__IdSubC__534D60F1" />
+        <EntityTypeShape EntityType="MessirveWSModel.Cliente" Width="1.5" PointX="3.875" PointY="9.125" />
+        <EntityTypeShape EntityType="MessirveWSModel.CuponDescuento" Width="1.5" PointX="5" PointY="13.625" />
+        <EntityTypeShape EntityType="MessirveWSModel.Empresa" Width="1.5" PointX="7.375" PointY="13.375" />
+        <EntityTypeShape EntityType="MessirveWSModel.Orden" Width="1.5" PointX="7.25" PointY="8.875" />
+        <EntityTypeShape EntityType="MessirveWSModel.OrdenProducto" Width="1.5" PointX="9.5" PointY="8.125" />
+        <EntityTypeShape EntityType="MessirveWSModel.ProductoEmpresa" Width="1.5" PointX="9.625" PointY="0.75" />
+        <AssociationConnector Association="MessirveWSModel.FK__Orden__IdUsuario__4F7CD00D" />
+        <AssociationConnector Association="MessirveWSModel.FK__UsuarioNo__IdLog__403A8C7D" />
+        <AssociationConnector Association="MessirveWSModel.FK__Orden__IdCupon__49C3F6B7" />
+        <AssociationConnector Association="MessirveWSModel.FK__ProductoE__IdEmp__4F7CD00D" />
+        <AssociationConnector Association="MessirveWSModel.FK__OrdenProd__IdOrd__4BAC3F29" />
+        <AssociationConnector Association="MessirveWSModel.FK__OrdenProd__IdPro__5441852A" />
+        <AssociationConnector Association="MessirveWSModel.FK__ProductoE__IdPro__37A5467C" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

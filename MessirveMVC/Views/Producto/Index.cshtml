@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="br-section-wrapper">
+
+    <button id="btnnuevo" class="btn btn-primary" data-target="#modal-record"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
+
+    <table id="dt-records" class="table-wrapper table display responsive nowrap table-hover" style="width:100%" data-page-length='10'>
+        <thead class="thead-colored thead-primary">
+            <tr>
+                <th>IdProducto</th>
+                <th>Nombre</th>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Activo</th>
+                <th>Exento</th>
+                <th>IdMarca</th>
+                <th>IdSubCategoria</th>
+                <th>IdCategoria</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="modal-record" class="modal" role="dialog">
+    <div class="modal-dialog" style="width: 400px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Direcciones AW</h3>
+            </div>
+            <div class="modal-body">
+                <form id="NewRecord" role="form">
+                    <div>
+
+                        <div class="form-group">
+                             <input type="hidden" id="txtIdProducto" class="form-control" placeholder="IdProducto" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtNombre" class="control-label">Nombre</label>
+                            <input type="text" id="txtNombre" class="form-control" placeholder="Nombre" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtCodigo" class="control-label">Codigo</label>
+                            <input type="text" id="txtCodigo" class="form-control" placeholder="Codigo" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtDecripcion" class="control-label">Descripcion</label>
+                            <input type="text" id="txtDecripcion" class="form-control" placeholder="Descripcion" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtActivo" class="control-label">Activo</label>
+                            <input type="text" id="txtActivo" class="form-control" placeholder="Activo" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtExento" class="control-label">Exento</label>
+                            <input type="text" id="txtExento" class="form-control" placeholder="Exento" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtIdMarca" class="control-label">Marca</label>
+                            <input type="text" id="txtIdMarca" class="form-control" placeholder="Marca" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtIdSubCategoria" class="control-label">SubCategoria</label>
+                            <input type="text" id="txtIdSubCategoria" class="form-control" placeholder="SubCategoria" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="txtIdCategoria" class="control-label">Categoria</label>
+                            <input type="text" id="txtIdCategoria" class="form-control" placeholder="Categoria" />
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnguardar" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+                        <button id="btncerrar" data-dismiss="modal" class="btn btn-danger">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/crud/Producto.js"></script>
