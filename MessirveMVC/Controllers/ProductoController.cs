@@ -43,13 +43,13 @@ namespace MessirveMVC.Controllers
             else
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                List<ProductoCLS> cat = JsonConvert.DeserializeObject<List<ProductoCLS>>(data);
+                List<ProductoCLS> prod = JsonConvert.DeserializeObject<List<ProductoCLS>>(data);
 
                 return Json(
                    new
                    {
                        success = true,
-                       data = cat,
+                       data = prod,
                        message = "donde"
                    },
                    JsonRequestBehavior.AllowGet
@@ -180,5 +180,14 @@ namespace MessirveMVC.Controllers
 
         }
 
+       /* public ActionResult Categoria()
+        {
+            CategoriaController Categoria = new CategoriaController();
+            ActionResult Cat = Categoria.Lista();
+
+                   
+        }
+       */
+      
     }
 }

@@ -48,7 +48,7 @@ namespace MessirveMVC.Controllers
                    {
                        success = true,
                        data = cat,
-                       message = "donde"
+                       message = "done"
                    },
                    JsonRequestBehavior.AllowGet
                    );
@@ -171,6 +171,8 @@ namespace MessirveMVC.Controllers
             }
 
         }
+
+      
 
     }
 }

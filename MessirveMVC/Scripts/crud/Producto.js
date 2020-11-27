@@ -49,8 +49,8 @@ function loadData() {
             { "data": "Activo" },
             { "data": "Exento" },
             { "data": "IdMarca" },
-            { "data": "IdSubCategoria" },
-            { "data": "IdCategoria" },
+            { "data": "SubCategoria1.Nombre" },
+            { "data": "Categoria.Nombre" },
 
         ],
         processing: true,
@@ -113,12 +113,12 @@ function loadData() {
             {
                 width: "10%",
                 targets: 7,
-                data: "IdSubCategoria"
+                data: "SubCategoria1.Nombre"
             },
             {
                 width: "10%",
                 targets: 8,
-                data: "IdCategoria"
+                data: "Categoria.Nombre"
             },
            
             {
@@ -148,8 +148,8 @@ function NewRecord() {
     $('#txtActivo').val('');
     $('#txtExento').val('');
     $('#txtIdMarca').val('');
-    $('#txtIdSubCategoria').val('');
-    $('#txtIdCategoria').val('');
+    $('#txtSubCategoria').val('');
+    $('#txtCategoria').val('');
 
 
     $('#modal-record').modal('toggle');
@@ -165,8 +165,8 @@ function loadDtl(data) {
     $('#txtActivo').val(data.Activo);
     $("#txtExento").val(data.Exento);
     $("#txtIdMarca").val(data.IdMarca);
-    $('#txtIdSubCategoria').val(data.IdSubCategoria);
-    $("#txtIdCategoria").val(data.IdCategoria);
+    $('#txtSubCategoria').val(data.SubCategoria.Nombre);
+    $("#txtCategoria").val(data.Categoria.Nombre);
 
     $('#modal-record').modal('toggle');
 }
@@ -179,8 +179,8 @@ function Guardar() {
     record += ",'Activo':'" + $.trim($('#txtActivo').val()) + "'";
     record += ",'Exento':'" + $.trim($('#txtExento').val()) + "'";
     record += ",'IdMarca':'" + $.trim($('#txtIdMarca').val()) + "'";
-    record += ",'IdSubCategoria':'" + $.trim($('#txtIdSubCategoria').val()) + "'";
-    record += ",'IdCategoria':'" + $.trim($('#txtIdCategoria').val()) + "'";
+    record += ",'SubCategoria':'" + $.trim($('#txtSubCategoria').val()) + "'";
+    record += ",'Categoria':'" + $.trim($('#txtCategoria').val()) + "'";
 
     $.ajax({
         type: 'POST',
