@@ -37,5 +37,6 @@ namespace MessirveWS.Models
         public virtual ICollection<OrdenProducto> OrdenProductoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductoEmpresa> ProductoEmpresas { get; set; }
+        public virtual Categoria Categoria1 { get; set; }
     }
 }

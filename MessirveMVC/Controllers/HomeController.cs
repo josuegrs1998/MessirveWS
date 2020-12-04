@@ -8,8 +8,16 @@ namespace MessirveMVC.Controllers
 {
     public class HomeController : Controller
     {
+        private bool usuarioAutenticado()
+        {
+            return HttpContext.Session["token"] != null;
+        }
         public ActionResult Index()
         {
+            if (!usuarioAutenticado())
+            {
+                return RedirectToAction("Index", "Token");
+            }
             return View();
         }
 

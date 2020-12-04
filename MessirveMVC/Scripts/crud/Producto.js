@@ -1,9 +1,9 @@
 ﻿var tableHdr = null;
 var IdRecord = 0;
-
+var cateCargada = false;
 $(document).ready(function () {
     loadData();
-
+    NewRecord();
     $('#btnnuevo').on('click', function (e) {
         e.preventDefault();
         IdRecord = 0;
@@ -50,7 +50,10 @@ function loadData() {
             { "data": "Exento" },
             { "data": "IdMarca" },
             { "data": "SubCategoria1.Nombre" },
-            { "data": "Categoria.Nombre" },
+            //{ "data": "IdSubCategoria" },
+            { "data": "Categoria1.Nombre" },
+            
+           
 
         ],
         processing: true,
@@ -118,9 +121,8 @@ function loadData() {
             {
                 width: "10%",
                 targets: 8,
-                data: "Categoria.Nombre"
+                data: "Categoria1.Nombre"
             },
-           
             {
                 width: "5%",
                 targets: 9,
@@ -139,7 +141,7 @@ function loadData() {
 }
 
 function NewRecord() {
-    $(".modal-header h3").text("Crear Categoria");
+    $(".modal-header h3").text("Crear Producto");
 
     $('#txtIdProducto').val('');
     $('#txtNombre').val('');
@@ -148,9 +150,12 @@ function NewRecord() {
     $('#txtActivo').val('');
     $('#txtExento').val('');
     $('#txtIdMarca').val('');
-    $('#txtSubCategoria').val('');
-    $('#txtCategoria').val('');
-
+    $('#txtIdSubCategoria').val('');
+    $('#txtIdCategoria').val('');
+    if (cateCargada != true) {
+        cargarCate();
+    }
+    
 
     $('#modal-record').modal('toggle');
 }
@@ -165,9 +170,14 @@ function loadDtl(data) {
     $('#txtActivo').val(data.Activo);
     $("#txtExento").val(data.Exento);
     $("#txtIdMarca").val(data.IdMarca);
-    $('#txtSubCategoria').val(data.SubCategoria.Nombre);
-    $("#txtCategoria").val(data.Categoria.Nombre);
+    $('#txtIdSubCategoria').val(data.IdSubCategoria);
+    $("#txtIdCategoria").val(data.IdCategoria);
+    //$('#txtSubCategoria').val(data.SubCategoria.Nombre);
+    //$("#txtCategoria").val(data.Categoria.Nombre);
 
+    if (cateCargada != true) {
+        cargarCate();
+    }
     $('#modal-record').modal('toggle');
 }
 
@@ -179,8 +189,8 @@ function Guardar() {
     record += ",'Activo':'" + $.trim($('#txtActivo').val()) + "'";
     record += ",'Exento':'" + $.trim($('#txtExento').val()) + "'";
     record += ",'IdMarca':'" + $.trim($('#txtIdMarca').val()) + "'";
-    record += ",'SubCategoria':'" + $.trim($('#txtSubCategoria').val()) + "'";
-    record += ",'Categoria':'" + $.trim($('#txtCategoria').val()) + "'";
+    record += ",'IdSubCategoria':'" + $.trim($('#txtIdSubCategoria').val()) + "'";
+    record += ",'IdCategoria':'" + $.trim($('#txtIdCategoria').val()) + "'";
 
     $.ajax({
         type: 'POST',
@@ -213,4 +223,46 @@ function Eliminar() {
             }
         }
     });
+}
+
+function cargarCate() {
+
+    $.ajax({
+        type: 'GET',
+        url: '/Categoria/Lista',
+        success: function (response) {
+            
+            if (response.success) {
+                cateCargada = true;
+                $.each(response.data, function (i, val) {
+                    $("#txtIdCategoria").append(`<option value="${response.data[i].IdCategoria}"> 
+                                       ${response.data[i].Nombre}
+                                  </option>`);
+                });
+               
+            } else {
+                $.notify(response.message, { globalPosition: "top center", className: "error" });
+            }
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/SubCategoria/Lista',
+        success: function (response) {
+
+            if (response.success) {
+                cateCargada = true;
+                $.each(response.data, function (i, val) {
+                    $("#txtIdSubCategoria").append(`<option value="${response.data[i].IdSubCategoria}"> 
+                                       ${response.data[i].Nombre}
+                                  </option>`);
+                });
+
+            } else {
+                $.notify(response.message, { globalPosition: "top center", className: "error" });
+            }
+        }
+    });
+ 
 }

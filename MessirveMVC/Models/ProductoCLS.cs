@@ -16,7 +16,7 @@ namespace MessirveMVC.Models
         public int IdMarca { get; set; }
         public int IdSubCategoria { get; set; }
         public int IdCategoria { get; set; }
-        public CategoriaCLS Categoria { get; set; }
+        public CategoriaCLS Categoria1 { get; set; }
         public SubCategoriaCLS SubCategoria1 { get; set; }
 
     }

@@ -3,7 +3,7 @@ var IdRecord = 0;
 
 $(document).ready(function () {
     loadData();
-
+    cargarSelect();
     $('#btnnuevo').on('click', function (e) {
         e.preventDefault();
         IdRecord = 0;
@@ -21,13 +21,13 @@ $(document).ready(function () {
         var data = tableHdr.row(_this).data();
 
         loadDtl(data);
-        IdRecord = data.IdCategoria;
+        IdRecord = data.IdProductoEmpresa;
     });
 
     $('#dt-records').on('click', 'button.btn-delete', function (e) {
         var _this = $(this).parents('tr');
         var data = tableHdr.row(_this).data();
-        IdRecord = data.IdCategoria;
+        IdRecord = data.IdProductoEmpresa;
         if (confirm('¿Seguro de eliminar el registro?')) {
             Eliminar();
         }
@@ -39,12 +39,17 @@ function loadData() {
     tableHdr = $('#dt-records').DataTable({
         responsive: true,
         destroy: true,
-        ajax: "/Categoria/Lista",
+        ajax: "/PEmpresa/Lista",
         order: [],
         columns: [
-            { "data": "IdCategoria" },
-            { "data": "Nombre" },
-            { "data": "Descripcion" },
+            { "data": "IdProductoEmpresa" },
+            //{ "data": "IdEmpresa" },
+            //{ "data": "IdProducto" },
+            { "data": "Empresa.Nombre" },
+            { "data": "Producto.Nombre" },
+            { "data": "Cantidad" },
+            { "data": "Descuento" },
+            { "data": "PrecioBase" },
 
         ],
         processing: true,
@@ -70,29 +75,44 @@ function loadData() {
         },
         columnDefs: [
             {
-                width: "100%",
+                width: "10%",
                 targets: 0,
-                data: "IdCategoria"
+                data: "IdProductoEmpresa"
             },
             {
-                width: "100%",
+                width: "10%",
                 targets: 1,
-                data: "Nombre"
+                data: "Empresa.Nombre"
             },
             {
-                width: "100%",
+                width: "10%",
                 targets: 2,
-                data: "Descripcion"
+                data: "Producto.Nombre"
             },
             {
-                width: "100%",
+                width: "10%",
                 targets: 3,
+                data: "Cantidad"
+            },
+            {
+                width: "10%",
+                targets: 4,
+                data: "Descuento"
+            },
+            {
+                width: "10%",
+                targets: 5,
+                data: "PrecioBase"
+            },
+            {
+                width: "5%",
+                targets: 6,
                 data: null,
                 defaultContent: '<button type="button" class="btn btn-info btn-sm btn-edit" data-target="#modal-record"><i class="fa fa-pencil"></i></button>'
             },
             {
-                width: "100%",
-                targets: 4,
+                width: "5%",
+                targets: 7,
                 data: null,
                 defaultContent: '<button type="button" class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button>'
 
@@ -102,34 +122,45 @@ function loadData() {
 }
 
 function NewRecord() {
-    $(".modal-header h3").text("Crear Categoria");
+    $(".modal-header h3").text("Crear Producto Empresa");
 
-    $('#txtIdCategoria').val('');
-    $('#txtNombre').val('');
-    $('#txtDescripcion').val('');
+    $('#txtIdProductoEmpresa').val('');
+    $('#txtIdEmpresa').val('');
+    $('#txtIdProducto').val('');
+    $('#txtCantidad').val('');
+    $('#txtDescuento').val('');
+    $('#txtPrecioBase').val('');
 
 
     $('#modal-record').modal('toggle');
 }
 
 function loadDtl(data) {
-    $(".modal-header h3").text("Editar Categoria");
+    $(".modal-header h3").text("Editar Empresa");
 
-    $("#txtIdCategoria").val(data.IdCategoria);
-    $('#txtNombre').val(data.Nombre);
-    $("#txtDescripcion").val(data.Descripcion);
+    $("#txtIdProductoEmpresa").val(data.IdProductoEmpresa);
+    $('#txtIdEmpresa').val(data.IdEmpresa);
+    $("#txtIdProducto").val(data.IdProducto);
+    $('#txtCantidad').val(data.Cantidad);
+    $('#txtDescuento').val(data.Descuento);
+    $("#txtPrecioBase").val(data.PrecioBase);
+
 
     $('#modal-record').modal('toggle');
 }
 
 function Guardar() {
-    var record = "'IdCategoria':" + IdRecord;
-    record += ",'Nombre':'" + $.trim($('#txtNombre').val()) + "'";
-    record += ",'Descripcion':'" + $.trim($('#txtDescripcion').val()) + "'";
+    var record = "'IdProductoEmpresa':" + IdRecord;
+    record += ",'IdEmpresa':'" + $.trim($('#txtIdEmpresa').val()) + "'";
+    record += ",'IdProducto':'" + $.trim($('#txtIdProducto').val()) + "'";
+    record += ",'Cantidad':'" + $.trim($('#txtCantidad').val()) + "'";
+    record += ",'Descuento':'" + $.trim($('#txtDescuento').val()) + "'";
+    record += ",'PrecioBase':'" + $.trim($('#txtPrecioBase').val()) + "'";
+
 
     $.ajax({
         type: 'POST',
-        url: '/Categoria/Guardar',
+        url: '/PEmpresa/Guardar',
         data: eval('({' + record + '})'),
         success: function (response) {
             if (response.success) {
@@ -148,7 +179,7 @@ function Guardar() {
 function Eliminar() {
     $.ajax({
         type: 'POST',
-        url: '/Categoria/Eliminar/?IdCategoria=' + IdRecord,
+        url: '/PEmpresa/Eliminar/?IdProductoEmpresa=' + IdRecord,
         success: function (response) {
             if (response.success) {
                 $.notify(response.message, { globalPosition: "top center", className: "success" });
@@ -158,4 +189,46 @@ function Eliminar() {
             }
         }
     });
+}
+
+function cargarSelect() {
+
+    $.ajax({
+        type: 'GET',
+        url: '/Empresa/Lista',
+        success: function (response) {
+
+            if (response.success) {
+                cateCargada = true;
+                $.each(response.data, function (i, val) {
+                    $("#txtIdEmpresa").append(`<option value="${response.data[i].IdEmpresa}"> 
+                                       ${response.data[i].Nombre}
+                                  </option>`);
+                });
+
+            } else {
+                $.notify(response.message, { globalPosition: "top center", className: "error" });
+            }
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/Producto/Lista',
+        success: function (response) {
+
+            if (response.success) {
+                cateCargada = true;
+                $.each(response.data, function (i, val) {
+                    $("#txtIdProducto").append(`<option value="${response.data[i].IdProducto}"> 
+                                       ${response.data[i].Nombre}
+                                  </option>`);
+                });
+
+            } else {
+                $.notify(response.message, { globalPosition: "top center", className: "error" });
+            }
+        }
+    });
+
 }

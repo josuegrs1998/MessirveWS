@@ -27,6 +27,8 @@
           <Property Name="FechaNacimiento" Type="date" Nullable="false" />
           <Property Name="IdLogin" Type="int" />
           <Property Name="Direccion" Type="nvarchar" MaxLength="200" />
+          <Property Name="Username" Type="nchar" MaxLength="30" />
+          <Property Name="Password" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="CuponDescuento">
           <Key>
@@ -56,7 +58,7 @@
           </Key>
           <Property Name="IdLogin" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="Orden">
           <Key>
@@ -176,6 +178,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Producto__IdCate__7E37BEF6">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Producto__IdSubC__2C3393D0">
           <End Role="SubCategoria" Type="Self.SubCategoria" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -283,6 +297,10 @@
             <End Role="Producto" EntitySet="Producto" />
             <End Role="OrdenProducto" EntitySet="OrdenProducto" />
           </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdCate__7E37BEF6" Association="Self.FK__Producto__IdCate__7E37BEF6">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
           <AssociationSet Name="FK__Producto__IdSubC__2C3393D0" Association="Self.FK__Producto__IdSubC__2C3393D0">
             <End Role="SubCategoria" EntitySet="SubCategoria" />
             <End Role="Producto" EntitySet="Producto" />
@@ -320,6 +338,7 @@
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Productoes" Relationship="MessirveWSModel.FK__Producto__IdSubC__6EF57B66" FromRole="Categoria" ToRole="Producto" />
+          <NavigationProperty Name="Productoes1" Relationship="MessirveWSModel.FK__Producto__IdCate__7E37BEF6" FromRole="Categoria" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Login">
           <Key>
@@ -327,7 +346,7 @@
           </Key>
           <Property Name="IdLogin" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Clientes" Relationship="MessirveWSModel.FK__UsuarioNo__IdLog__403A8C7D" FromRole="Login" ToRole="Cliente" />
         </EntityType>
         <EntityContainer Name="MessirveWSEntities" annotation:LazyLoadingEnabled="true">
@@ -377,6 +396,10 @@
             <End Role="Producto" EntitySet="Productoes" />
             <End Role="ProductoEmpresa" EntitySet="ProductoEmpresas" />
           </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdCate__7E37BEF6" Association="MessirveWSModel.FK__Producto__IdCate__7E37BEF6">
+            <End Role="Categoria" EntitySet="Categorias" />
+            <End Role="Producto" EntitySet="Productoes" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Producto">
           <Key>
@@ -395,6 +418,7 @@
           <NavigationProperty Name="SubCategoria1" Relationship="MessirveWSModel.FK__Producto__IdSubC__534D60F1" FromRole="Producto" ToRole="SubCategoria" />
           <NavigationProperty Name="OrdenProductoes" Relationship="MessirveWSModel.FK__OrdenProd__IdPro__5441852A" FromRole="Producto" ToRole="OrdenProducto" />
           <NavigationProperty Name="ProductoEmpresas" Relationship="MessirveWSModel.FK__ProductoE__IdPro__37A5467C" FromRole="Producto" ToRole="ProductoEmpresa" />
+          <NavigationProperty Name="Categoria1" Relationship="MessirveWSModel.FK__Producto__IdCate__7E37BEF6" FromRole="Producto" ToRole="Categoria" />
         </EntityType>
         <EntityType Name="SubCategoria">
           <Key>
@@ -445,6 +469,8 @@
           <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ordens" Relationship="MessirveWSModel.FK__Orden__IdUsuario__4F7CD00D" FromRole="Cliente" ToRole="Orden" />
           <NavigationProperty Name="Login" Relationship="MessirveWSModel.FK__UsuarioNo__IdLog__403A8C7D" FromRole="Cliente" ToRole="Login" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CuponDescuento">
           <Key>
@@ -615,6 +641,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Producto__IdCate__7E37BEF6">
+          <End Type="MessirveWSModel.Categoria" Role="Categoria" Multiplicity="0..1" />
+          <End Type="MessirveWSModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -666,6 +704,8 @@
           <EntitySetMapping Name="Clientes">
             <EntityTypeMapping TypeName="MessirveWSModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="IdLogin" ColumnName="IdLogin" />
                 <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />

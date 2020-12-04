@@ -5,32 +5,50 @@
 }
 
 
-
 @using (Ajax.BeginForm("Login", "Token",
                             new AjaxOptions { UpdateTargetId = "divInterestDeatils" }))
 {
 
-<fieldset>
-    <div style="text-align:center">
-        <legend>Ingresar</legend>
-        <div id="divInterestDeatils">@ViewBag.Message</div>
+    <fieldset>
+        <div style="text-align:center">
+            <br />
+            <legend style="font-size:3rem">Login</legend>
+            <div id="divInterestDeatils">
+                @ViewBag.Message
+                        <p>@TempData["shortMessage"]</p>
+                    </div>
+           
+            <div class="editor-label" style="padding-left: 42.5%">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { placeholder = "username", autocomplete = "off ", @class = "form-control", @required = "required" } })
+            </div>
+            <br />
+            <div class="editor-field" style="padding-left: 42.5%">
+                @Html.PasswordFor(model => model.Password, new { placeholder = "clave", @class = "form-control", @required = "required" })
+            </div>
+            <p>
+                <br />
+                <input type="submit" value="Ingresar" class="btn btn-default" />
+                <br />
+                <br />
 
-        <div class="editor-label">
-            @Html.EditorFor(model => model.Username)
+                <a>@Html.ActionLink("Registrarse", "Index", "Cliente")</a>
+            </p>
         </div>
 
-        <div class="editor-field">
-            @Html.PasswordFor(model => model.Password)
-        </div>
-        <p>
-            <input type="submit" value="Ingresar" />
-            <input type="button" class="btn btn-danger" value="Logout" onclick="location.href='@Url.Action("Logout", "Token")'">
-        </p>
-    </div>
-</fieldset>
+    </fieldset>
 }
 
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        try {
+            $("input[type='text']").each(function () {
+                $(this).attr("autocomplete", "off");
+            });
+        }
+        catch (e) { }
+    });
 
+</script>
 
 
 @section Scripts {

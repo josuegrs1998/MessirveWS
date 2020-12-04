@@ -11,10 +11,9 @@ using System.Web.Mvc;
 
 namespace MessirveMVC.Controllers
 {
-    public class ProductoController : Controller
+    public class PEmpresaController : Controller
     {
-        // GET: Producto
-
+        // GET: Empresa
         private bool usuarioAutenticado()
         {
             return HttpContext.Session["token"] != null;
@@ -35,7 +34,7 @@ namespace MessirveMVC.Controllers
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-            HttpResponseMessage response = httpClient.GetAsync("api/Producto").Result;
+            HttpResponseMessage response = httpClient.GetAsync("api/ProductoEmpresa").Result;
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 return RedirectToAction("Index", "Token");
@@ -43,14 +42,14 @@ namespace MessirveMVC.Controllers
             else
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                List<ProductoCLS> prod = JsonConvert.DeserializeObject<List<ProductoCLS>>(data);
+                List<ProductoEmpresaCLS> cat = JsonConvert.DeserializeObject<List<ProductoEmpresaCLS>>(data);
 
                 return Json(
                    new
                    {
                        success = true,
-                       data = prod,
-                       message = "donde"
+                       data = cat,
+                       message = "done"
                    },
                    JsonRequestBehavior.AllowGet
                    );
@@ -58,7 +57,7 @@ namespace MessirveMVC.Controllers
 
         }
 
-        public ActionResult Guardar(int IdProducto, string Nombre, string Codigo, string Decripcion,  bool Activo, bool Exento, int IdMarca, int IdSubCategoria, int IdCategoria)
+        public ActionResult Guardar(int IdProductoEmpresa, int IdEmpresa, int IdProducto, int Cantidad, int Descuento, decimal PrecioBase)
         {
             if (!usuarioAutenticado())
             {
@@ -71,35 +70,34 @@ namespace MessirveMVC.Controllers
             }
             try
             {
-                ProductoCLS p = new ProductoCLS();
-                p.IdProducto = IdProducto;
-                p.Nombre = Nombre;
-                p.Codigo = Codigo;
-                p.Decripcion = Decripcion;
-                p.Activo = Activo;
-                p.Exento = Exento;
-                p.IdMarca = IdMarca;
-                p.IdSubCategoria = IdSubCategoria;
-                p.IdCategoria = IdCategoria;
+                ProductoEmpresaCLS em = new ProductoEmpresaCLS();
+                em.IdProductoEmpresa = IdProductoEmpresa;
+                em.IdEmpresa = IdEmpresa;
+                em.IdProducto = IdProducto;
+                em.Cantidad = Cantidad;
+                em.Descuento = Descuento;
+                em.PrecioBase = PrecioBase;
+                em.FechaIngreso = DateTime.Now;
+
 
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-                string productoJson = JsonConvert.SerializeObject(p);
+                string productoJson = JsonConvert.SerializeObject(em);
                 HttpContent body = new StringContent(productoJson, Encoding.UTF8, "application/json");
 
-                if (IdProducto == 0)
+                if (IdProductoEmpresa == 0)
                 {
-                    HttpResponseMessage response = httpClient.PostAsync("api/Producto", body).Result;
+                    HttpResponseMessage response = httpClient.PostAsync("api/ProductoEmpresa", body).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         return Json(
                             new
                             {
                                 success = true,
-                                message = "Se creo un producto"
+                                message = "Se creo una Empresa"
                             }, JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -109,14 +107,14 @@ namespace MessirveMVC.Controllers
                 }
                 else
                 {
-                    HttpResponseMessage response = httpClient.PutAsync($"api/Producto/{IdProducto}", body).Result;
+                    HttpResponseMessage response = httpClient.PutAsync($"api/ProductoEmpresa/{IdProductoEmpresa}", body).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         return Json(
                             new
                             {
                                 success = true,
-                                message = "Se edito un producto"
+                                message = "Se edito una Empresa"
                             }, JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -137,7 +135,7 @@ namespace MessirveMVC.Controllers
             }
         }
 
-        public ActionResult eliminar(int idProducto)
+        public ActionResult eliminar(int IdProductoEmpresa)
         {
             if (!usuarioAutenticado())
             {
@@ -155,7 +153,7 @@ namespace MessirveMVC.Controllers
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-                HttpResponseMessage response = httpClient.DeleteAsync($"api/Producto/{idProducto}").Result;
+                HttpResponseMessage response = httpClient.DeleteAsync($"api/ProductoEmpresa/{IdProductoEmpresa}").Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -163,7 +161,7 @@ namespace MessirveMVC.Controllers
                         new
                         {
                             success = true,
-                            message = "Se elimino una subcategoria"
+                            message = "Se elimino una Empresa"
                         }, JsonRequestBehavior.AllowGet);
                 }
                 throw new Exception("Error al eliminar");
@@ -179,6 +177,8 @@ namespace MessirveMVC.Controllers
             }
 
         }
-   
+
+
+
     }
 }

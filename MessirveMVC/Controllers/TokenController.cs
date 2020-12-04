@@ -23,7 +23,8 @@ namespace MessirveMVC.Controllers
             }
             else
             {
-                ViewBag.Message = "Presione logout para cerrar sesion";
+                return RedirectToAction("Index", "Home");
+               
             }
             Usuario model = new Usuario();
             return View(model);
@@ -47,7 +48,7 @@ namespace MessirveMVC.Controllers
             if (token != null)
             {
                 HttpContext.Session.Add("token", token.AccessToken);
-                ViewBag.Message = "Usuario Autenticado";
+                return RedirectToAction("Index", "Home");
             }
             else
             {

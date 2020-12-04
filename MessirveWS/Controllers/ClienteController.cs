@@ -3,18 +3,44 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MessirveWS.Models;
 
 namespace MessirveWS.Controllers
 {
-    [Authorize]
+   
     public class ClienteController : ApiController
     {
+        public static string Encrypt(string encryptString)
+        {
+            string EncryptionKey = "0ram@1234xxxxxxxxxxtttttuuuuuiiiiio";  //we can change the code converstion key as per our requirement    
+            byte[] clearBytes = Encoding.Unicode.GetBytes(encryptString);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] {
+            0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
+        });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    encryptString = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return encryptString;
+        }
         private MessirveWSEntities db = new MessirveWSEntities();
 
         // GET: api/Cliente
@@ -34,6 +60,21 @@ namespace MessirveWS.Controllers
             }
 
             return Ok(cliente);
+        }
+
+        //Get Cliente by name
+        [ResponseType(typeof(Cliente))]
+        public IHttpActionResult GetLoginName(string username)
+        {
+            MessirveWSEntities db = new MessirveWSEntities();
+            var result = db.Clientes.Where(x => x.Username.Equals(username));
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
 
         // PUT: api/Cliente/5
@@ -79,7 +120,7 @@ namespace MessirveWS.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            cliente.Password = Encrypt(cliente.Password);
             db.Clientes.Add(cliente);
             db.SaveChanges();
 

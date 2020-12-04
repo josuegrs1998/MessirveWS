@@ -7,36 +7,51 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <link href="@Url.Content("~/Scripts/index.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", false)
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.js" data-modules="effect effect-bounce effect-blind effect-bounce effect-clip effect-drop effect-fold effect-slide"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
     <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
     @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    @if (Session["token"] != null)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Messirve", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
 
-                    <li>@Html.ActionLink("Categoria", "Index", "Categoria")</li>
-                    <li>@Html.ActionLink("SubCategoria", "Index", "SubCategoria")</li>
-                    <li>@Html.ActionLink("Producto", "Index", "Producto")</li>
-                </ul>
+
+                        <li>@Html.ActionLink("Categoria", "Index", "Categoria")</li>
+                        <li>@Html.ActionLink("SubCategoria", "Index", "SubCategoria")</li>
+                        <li>@Html.ActionLink("Producto", "Index", "Producto")</li>
+                        <li>@Html.ActionLink("Empresa", "Index", "Empresa")</li>
+                        <li>@Html.ActionLink("PEmpresa", "Index", "PEmpresa")</li>
+                        <li>@Html.ActionLink("Orden", "Index", "Orden")</li>
+                        <li>@Html.ActionLink("OrdenProducto", "Index", "OrdenProduto")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Token")</li>
+
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
+    }
 
+    <div class="">
+        @RenderBody()
 
     </div>
 

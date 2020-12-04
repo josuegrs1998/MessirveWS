@@ -18,6 +18,7 @@ namespace MessirveWS.Models
         public Categoria()
         {
             this.Productoes = new HashSet<Producto>();
+            this.Productoes1 = new HashSet<Producto>();
         }
     
         public int IdCategoria { get; set; }
@@ -26,5 +27,7 @@ namespace MessirveWS.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Producto> Productoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Producto> Productoes1 { get; set; }
     }
 }

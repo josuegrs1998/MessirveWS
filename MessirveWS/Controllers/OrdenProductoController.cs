@@ -36,6 +36,21 @@ namespace MessirveWS.Controllers
             return Ok(ordenProducto);
         }
 
+        //Get OrdenProducto by IdOrden
+        [ResponseType(typeof(OrdenProducto))]
+        public IHttpActionResult GetProductByOrdenId(int idOrden)
+        {
+            MessirveWSEntities db = new MessirveWSEntities();
+            var result = db.OrdenProductoes.Where(x => x.IdOrden.Equals(idOrden));
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         // PUT: api/OrdenProducto/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutOrdenProducto(int id, OrdenProducto ordenProducto)

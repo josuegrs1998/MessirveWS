@@ -148,7 +148,7 @@ function Guardar() {
 function Eliminar() {
     $.ajax({
         type: 'POST',
-        url: '/Categoria/Eliminar/?IdSubCategoria=' + IdRecord,
+        url: '/SubCategoria/Eliminar/?IdSubCategoria=' + IdRecord,
         success: function (response) {
             if (response.success) {
                 $.notify(response.message, { globalPosition: "top center", className: "success" });

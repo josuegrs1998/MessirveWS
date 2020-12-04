@@ -24,6 +24,7 @@
         <AssociationConnector Association="MessirveWSModel.FK__OrdenProd__IdOrd__4BAC3F29" />
         <AssociationConnector Association="MessirveWSModel.FK__OrdenProd__IdPro__5441852A" />
         <AssociationConnector Association="MessirveWSModel.FK__ProductoE__IdPro__37A5467C" />
+        <AssociationConnector Association="MessirveWSModel.FK__Producto__IdCate__7E37BEF6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

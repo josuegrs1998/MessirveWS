@@ -1,0 +1,90 @@
+﻿@model MessirveMVC.Models.ClienteCLS
+@{
+    ViewBag.Title = "Index";
+}
+
+<script>
+    $(function () {
+        $(".startdate").datepicker({
+            dateFormat: 'yy-mm-dd',//check change
+            changeMonth: true,
+            changeYear: true
+        });
+    })
+</script>
+
+
+@using (Ajax.BeginForm("Guardar", "Cliente",
+                            new AjaxOptions { UpdateTargetId = "divInterestDeatils" }))
+{
+
+    <fieldset>
+        <div style="text-align:center">
+            <br />
+            <legend style="font-size:3rem">Crear Cliente</legend>
+            <div id="divInterestDeatils">
+
+                <p>@TempData["shortMessage"]</p>
+            </div>
+            <div style="display:flex;justify-content:center;">
+                <div style="">
+
+                    <div style="">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { placeholder = "Nombre", autocomplete = "off ", @class = "form-control" } })
+                    </div>
+                    <br />
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { placeholder = "Apellido", autocomplete = "off ", @class = "form-control" } })
+                    </div>
+                    <br />
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { placeholder = "Telefono", autocomplete = "off ", @class = "form-control" } })
+                    </div>
+                    <br />
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { placeholder = "Identificacion", autocomplete = "off ", @class = "form-control" } })
+                    </div>
+                    <br />
+                </div>
+                <div style="width:10%">
+
+                </div>
+                <div style="">
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { placeholder = "Correo", autocomplete = "off ", @class = "form-control" } })
+                    </div>
+                    <br />
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { placeholder = "Direccion", autocomplete = "off ", @class = "form-control" } })
+                    </div>
+                    <br />
+                    <div class="editor-label">
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { placeholder = "Usuario", autocomplete = "off ", @class = "form-control" } })
+                    </div>
+                    <br />
+                    <div class="editor-label">
+                        @Html.PasswordFor(model => model.Password, new { placeholder = "clave", @class = "form-control" })
+
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                <br />
+                <input type="submit" value="Registrarse" class="btn btn-default" />
+                <br />
+                <br />
+                <a>@Html.ActionLink("Volver", "Index", "Token")</a>
+            </p>
+        </div>
+
+    </fieldset>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
